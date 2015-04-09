@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Identity.Models.EndUser>
+@{
+    ViewBag.Title = "EndUser";
+}
+<div>
+    <h2>EndUser</h2>
+</div> 
+<form method="get" action="@Url.Action("Index")" data-my-ajax="true" data-my-target="#endUserList">
+ 
+    <div>
+        <input type="text" name="searchString" data-my-autocomplete="@Url.Action("Autocomplete")" />
+        <input type="submit" value="Search By Email" />
+    </div>
+</form>
+
+<div>
+    <p></p>
+    <p>@Html.ActionLink("Create New", "Create")</p>
+</div>
+@Html.Partial("_EndUserList", Model)

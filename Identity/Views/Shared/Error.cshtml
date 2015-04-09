@@ -1,0 +1,22 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<h1 class="text-danger">Error.</h1>
+@if (String.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <h2 class="text-danger">An error occurred while processing your request.</h2>
+}
+else 
+{
+    <h2 class="text-danger">@ViewBag.ErrorMessage</h2>
+    if(!String.IsNullOrEmpty(ViewBag.Link))
+    {
+        <p>This Link is for Testing purpose only:</p>
+        <p>You can click this link to confirm the email: <a href="@ViewBag.Link">link</a>  </p> 
+
+    }
+}
+

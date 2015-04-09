@@ -1,0 +1,74 @@
+﻿@model PagedList.IPagedList<Identity.Models.ProductOwner>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+@{
+    ViewBag.Title = "ProductOwner";
+}
+
+<h2>ProductOwner</h2>
+<h1></h1>
+
+@using (Html.BeginForm("Index", "ProductOwner", FormMethod.Get))
+{
+    <p>
+        Find by Company Name :   @Html.TextBox("SearchString", ViewBag.currentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<div>
+    <br />
+    <p>@Html.ActionLink("Create New", "Create")</p>
+    <br />
+</div>
+<div>
+    <table class="table">
+        <tr>
+            <th>Email</th>
+            <th>@Html.ActionLink("CompanyName", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })</th>
+            <th> @Html.ActionLink("JoiningDate", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })</th>
+            <th>Description</th>
+            <th>Contact Number</th>
+            <th>Address</th>
+            <th>FoundedIn</th>
+            <th>WebsiteUrl</th>
+            <th>TwitterUrl
+            <th>FbUrl</th>
+            <th>Action</th>
+            <th></th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(ModelItem => item.Email) </td>
+                <td>@Html.DisplayFor(ModelItem => item.CompanyName)</td>
+                <td>@Html.DisplayFor(ModelItem => item.DateOfJoining)</td>
+                <td>@Html.DisplayFor(ModelItem => item.Description)</td>
+                <td>@Html.DisplayFor(ModelItem => item.ContactNo)</td>
+                <td>
+                    @Html.DisplayFor(ModelItem => item.AddressObject.Street1)
+                    @Html.DisplayFor(ModelItem => item.AddressObject.Street2)
+                    @Html.DisplayFor(ModelItem => item.AddressObject.City),
+                    @Html.DisplayFor(ModelItem => item.AddressObject.State)
+                    @Html.DisplayFor(ModelItem => item.AddressObject.Pin)
+                </td>
+                <td>@Html.DisplayFor(ModelItem => item.FoundedIn)</td>
+                <td>@Html.DisplayFor(ModelItem => item.WebsiteUrl)</td>
+                <td>@Html.DisplayFor(ModelItem => item.TwitterUrl)</td>
+                <td>@Html.DisplayFor(ModelItem => item.FbUrl)</td>
+                <td>@Html.ActionLink("Details", "Details", new { id = item.Id })</td>
+                <td>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</td>
+                <td>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</td>
+            </tr>
+        }
+
+    </table>
+</div>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
